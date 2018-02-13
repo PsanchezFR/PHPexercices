@@ -6,6 +6,7 @@
 *
 *
 */
+
 function multiples5($limite,$mode){
 	if(is_int($limite) && $limite > 5){
 		if(is_string($mode)){
@@ -17,26 +18,23 @@ function multiples5($limite,$mode){
 				for ($i=5; $i < $limite; $i+=5) { 
 					$result.= "$i, ";
 				}
-			}
-			else if($mode == "while"){
+			} else if($mode == "while"){
 				$result .= "mode : while ; ";
 				while($j < $limite){
 					$result .= "$j, ";
 					$j += 5;
 				}
-			}
-			else{
+			} else{
 				return "INCORRECT MODE, PLEASE SPECIFY while OR for.";
 			}
-		}
-		else{
+		} else{
 			return "INCORRECT MODE, PLEASE SPECIFY while OR for.";
 		}
 
-		trim($result, ", ");
+		$result = trim($result, ", ");
 		return $result;
 	}
 }
 
-echo multiples5(100, "for");
+echo multiples5(1000, "while");
 ?>
