@@ -47,23 +47,36 @@ Note: A prime number (or a prime) is a natural number greater than 1 that has no
 			return "<br />$resultStr";
 		}
 		else{
-			return "<br /> UNACCEPTABLE ARGUMENT §§§"
+			return "<br /> UNACCEPTABLE ARGUMENT §§§";
 		}
 	}
 
 	function sortArray($array){
 		if(is_array($array)){
-				return 1;
+				
 			}
 			else{
-				return 0;
+				
 			}
 		}
+
+	function sortByType($array){
+		if(is_array($array)){
+				foreach ($variable as $key => $value) {
+					
+				}
+			} else{
+				return "Bad argument in function sortByType";
+			}
+		}
+	}	
 		
-	$arrayTest = array(2,4,5,18,1,65,2,43);
+	$arrayTest = [2,4,5,18,1,65,2,43];
 	echo factorial(7);
 	echo testPrime(4);
 	echo reverseStr("Cette phrase va etre inversee coucou c'est moi j'ecris un truc super long pour tester !");
+	echo "<br />";
 	echo sortArray($arrayTest);
+	
 ?>
 
