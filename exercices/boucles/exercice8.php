@@ -2,11 +2,13 @@
 /**
 * Creer un echiquier de 8 cases sur 8 avec une case sur deux colorés en noir
 */
-function creerEchiquier($taille){
-	if(!is_int($taille)){
+function creerEchiquier($taille, $tailleCases){
+	if(!is_int($taille) || !is_int($tailleCases)){
 		echo "Mauvais format de tailles pour creerEchiquier()";
 		return;
 	}
+	$strTailleCases = strval($tailleCases);
+	$strTailleCases .= "px";
 	echo "<table>";
 	$white = "#FFFFFF";
 	$grey = "#AAAAAA";
@@ -27,10 +29,10 @@ function creerEchiquier($taille){
 		echo "<tr>";
 		for ($j=0; $j < $taille ; $j++) { 
 			if($j % 2 == 0){
-			echo "<td style='height: 30px; width: 30px; border: 2px solid $grey; background-color: $color1 '></td>";
+			echo "<td style='height: $strTailleCases; width: $strTailleCases; border: 2px solid $grey; background-color: $color1 '></td>";
 			}
 			else{
-				echo "<td style='height: 30px; width: 30px; border: 2px solid $grey; background-color: $color2'></td>";
+				echo "<td style='height: $strTailleCases; width: $strTailleCases; border: 2px solid $grey; background-color: $color2'></td>";
 			}
 		}
 		echo "</tr>";
@@ -38,7 +40,7 @@ function creerEchiquier($taille){
 	echo "</table>";
 }
 
-creerEchiquier(25);
+creerEchiquier(8, 50);
 ?>
 
 <html>
