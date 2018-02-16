@@ -15,16 +15,18 @@
 		}
 
 		.circle{
-			position:relative;
 			border-radius: 50%;
-			height: <?php echo $sizeCircle . "px"?>;
-			width: <?php echo $sizeCircle . "px"?>;
-			top: <?php echo $xPositionCircle . "px"?>;
-			left:<?php echo $yPositionCircle . "px"?>;
+			height: <?php echo $maxSizeCircle . "px"?>;
+			width: <?php echo $maxSizeCircle . "px"?>;
+			top: <?php echo $xMaxPositionCircle . "px"?>;
+			left:<?php echo $yMaxPositionCircle . "px"?>;
 		}
 
 		.square{
-			position: relative;
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: space-between;
 			height: <?php echo $minHeightSquare . "px"?>;
 			width: <?php echo $minWidthSquare . "px"?>;
 			top:<?php echo $xMaxPositionSquare . "px"?>;
@@ -42,17 +44,18 @@
 
 // VARIABLES USED IN CSS
 
-	// //circles
-	$xPositionCircle = 50;
-	$yPositionCircle = 50;
-	$sizeCircle = 20;
 	//squares
 	$xMaxPositionSquare = 0;
 	$yMaxPositionSquare = 0;
 	$xMaxSizeSquare = 240;
 	$yMaxSizeSquare = 240;
-	$minWidthSquare = 50;
-	$minHeightSquare = 50;
+	$minWidthSquare = 100;
+	$minHeightSquare = 100;
+	//circles
+	$minSizeCircle = 20;
+	$xMaxPositionCircle = $minWidthSquare - $minSizeCircle;
+	$yMaxPositionCircle = $minHeightSquare - $minSizeCircle;
+	
 
 	$previousColor = [0, 0, 0];
 
@@ -60,19 +63,32 @@
 
 
 function createCircle($x, $y, $size){
-	echo "<div class='circle'></div>";
+	global $previousColor;
+	$color = colorCalculus($previousColor);
+	echo "<div class='circle' style='top: $x; left: $y; width: $size; height: $size; background-color: rgb($color[0],$color[1],$color[2]);'></div>";
 }
 
-function createCirclesContainer($x, $y, $sizeX, $sizeY, $color, $circlesNumber){
+function createCirclesContainer($x, $y, $sizeX, $sizeY, $circlesNumber){
+	global $previousColor, $xMaxPositionCircle, $yMaxPositionCircle, $minSizeCircle;
+	$color = colorCalculus($previousColor);
 
 	echo "<div class='square' style='top: $x; left: $y; width: $sizeX; height: $sizeY; background-color: rgb($color[0],$color[1],$color[2])'>";
-	createCircle(0,0,0);
+
+	for ($i=0; $i < $circlesNumber; $i++) {
+		$currentX = random_int($minSizeCircle, $xMaxPositionCircle);
+		$currentY = random_int($minSizeCircle, $yMaxPositionCircle);
+		createCircle(
+				$currentX, 
+				$currentY, 
+				random_int($minSizeCircle, max($currentY, $currentX))
+			);
+	}
+
 	echo "</div>";
 }
 
 function generateShapes($squaresNumber, $circlesBySquare){
-	global $xMaxPositionSquare, $yMaxPositionSquare, $xMaxSizeSquare, $yMaxSizeSquare,$circlesBySquare, $minWidthSquare, $minHeightSquare, $previousColor;
-	
+	global $xMaxPositionSquare, $yMaxPositionSquare, $xMaxSizeSquare, $yMaxSizeSquare, $minWidthSquare, $minHeightSquare, $previousColor;
 	//Generation of squares with random positions and sizes
 		for ($i=0; $i < $squaresNumber; $i++) { 
 			
@@ -81,7 +97,6 @@ function generateShapes($squaresNumber, $circlesBySquare){
 			 	random_int(0, $yMaxPositionSquare),
 			  	random_int($minWidthSquare, $xMaxSizeSquare),
 			  	random_int($minHeightSquare, $yMaxSizeSquare), 
-			  	colorCalculus($previousColor),
 			  	$circlesBySquare
 			  	);
 		}
@@ -106,7 +121,7 @@ function generateShapes($squaresNumber, $circlesBySquare){
 			return $currentColor;
 	}
 
-generateShapes(5, 2);
+generateShapes(5, 3);
  ?>
 </body>
 </html>
