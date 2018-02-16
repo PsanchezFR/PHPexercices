@@ -1,5 +1,20 @@
 <html lang="fr">
 <head>
+	<?php 
+		session_start();
+
+		//squares
+		$xMaxPositionSquare = 0;
+		$yMaxPositionSquare = 0;
+		$xMaxSizeSquare = 240;
+		$yMaxSizeSquare = 240;
+		$minWidthSquare = 100;
+		$minHeightSquare = 100;
+		//circles
+		$minSizeCircle = 20;
+		$xMaxPositionCircle = $minWidthSquare - $minSizeCircle;
+		$yMaxPositionCircle = $minHeightSquare - $minSizeCircle;
+	?>
 	<style>
 		html{
 			height: 100vh;
@@ -32,7 +47,36 @@
 			top:<?php echo $xMaxPositionSquare . "px"?>;
 			left:<?php echo $yMaxPositionSquare . "px"?>;
 		}
+
+		label{
+			float: left;
+			clear: both;
+		}
+
+		fieldset{
+			position: relative;
+			height: 100%;
+			float: left;
+			clear: both;
+		}
+
+		strong{
+			position: absolute;
+			top: 50vh;
+			left: 50vw;
+			font-size: 5vmin;
+			background-color: red;
+			color: white;
+			z-index: 9999;
+		}
 	</style>
+	<fieldset>
+		<form action="exercice9.php" method="post">
+			<label>Nombre de rectancles : <input type="text" name="squares"></label>
+			<label>Nombre de cercles : <input type="text" name="circles"></label>
+			<label><input type="submit" name="submit" value="generer"></label>
+		</form>
+	</fieldset>
 </head>
 <body>
 <?PHP 
@@ -42,19 +86,25 @@
 * Creer un formulaire demandant le nombre de carre ainsi que le nombre de rond par carre.
 */
 
-// VARIABLES USED IN CSS
+	if(isset($_POST["squares"]) && isset($_POST["circles"])){
+		if(!empty($_POST["circles"]) && !empty($_POST["circles"])){
+			//convert $_POST strings to INT
+			$_POST["squares"] = intval($_POST["squares"]);
+			$_POST["circles"] = intval($_POST["circles"]);
 
-	//squares
-	$xMaxPositionSquare = 0;
-	$yMaxPositionSquare = 0;
-	$xMaxSizeSquare = 240;
-	$yMaxSizeSquare = 240;
-	$minWidthSquare = 100;
-	$minHeightSquare = 100;
-	//circles
-	$minSizeCircle = 20;
-	$xMaxPositionCircle = $minWidthSquare - $minSizeCircle;
-	$yMaxPositionCircle = $minHeightSquare - $minSizeCircle;
+			if(is_int($_POST["squares"]) && is_int($_POST["circles"])){
+				$_SESSION["squares"] = $_POST["squares"];
+				$_SESSION["circles"] = $_POST["circles"];
+			}
+			else{
+				echo "<strong>BAD INPUT !</strong>";
+			}
+		}
+
+	}
+		
+	
+
 	
 
 	$previousColor = [0, 0, 0];
@@ -120,8 +170,10 @@ function generateShapes($squaresNumber, $circlesBySquare){
 			$GLOBALS['previousColor'] = $currentColor;
 			return $currentColor;
 	}
-
-generateShapes(5, 3);
+	// CALL THE FUNCTION 
+	if(!empty($_SESSION["circles"]) && !empty($_SESSION["squares"])){
+		generateShapes($_SESSION["squares"],$_SESSION["circles"]);
+	}
  ?>
 </body>
 </html>
