@@ -93,10 +93,15 @@
 				$_SESSION["circles"] = intval($_POST["circles"]);
 			}
 			else{
-				echo "<strong>BAD INPUT !</strong>";
+				echo "<strong>MAUVAIS INPUT !</strong>";
 				$_SESSION["squares"] = 0;
 				$_SESSION["circles"] = 0;
 			}
+		}
+		else{
+			echo "<strong>Remplissez les champs !</strong>";
+			$_SESSION["squares"] = 0;
+			$_SESSION["circles"] = 0;
 		}
 
 	}

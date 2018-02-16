@@ -56,15 +56,18 @@ Note: A prime number (or a prime) is a natural number greater than 1 that has no
 				
 			}
 			else{
-				
+				return "Bad argument in function sortArray";
 			}
 		}
 
 	function sortByType($array){
+		$temp;
 		if(is_array($array)){
 				foreach ($variable as $key => $value) {
 					
 				}
+
+
 			} else{
 				return "Bad argument in function sortByType";
 			}
