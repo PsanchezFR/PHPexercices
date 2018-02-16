@@ -88,16 +88,14 @@
 
 	if(isset($_POST["squares"]) && isset($_POST["circles"])){
 		if(!empty($_POST["circles"]) && !empty($_POST["circles"])){
-			//convert $_POST strings to INT
-			$_POST["squares"] = intval($_POST["squares"]);
-			$_POST["circles"] = intval($_POST["circles"]);
-
-			if(is_int($_POST["squares"]) && is_int($_POST["circles"])){
-				$_SESSION["squares"] = $_POST["squares"];
-				$_SESSION["circles"] = $_POST["circles"];
+			if(is_numeric($_POST["squares"]) && is_numeric($_POST["circles"])){
+				$_SESSION["squares"] = intval($_POST["squares"]);
+				$_SESSION["circles"] = intval($_POST["circles"]);
 			}
 			else{
 				echo "<strong>BAD INPUT !</strong>";
+				$_SESSION["squares"] = 0;
+				$_SESSION["circles"] = 0;
 			}
 		}
 
