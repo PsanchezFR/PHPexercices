@@ -63,8 +63,13 @@ Note: A prime number (or a prime) is a natural number greater than 1 that has no
 	function sortByType($array){
 		$temp;
 		if(is_array($array)){
-				foreach ($variable as $key => $value) {
-					
+				if(count($array)>2){
+					foreach ($variable as $key => $value) {
+						
+					}
+				}
+				else{
+					return $array;
 				}
 
 
