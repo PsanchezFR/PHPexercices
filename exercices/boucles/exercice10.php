@@ -34,7 +34,6 @@
 			<label>Nom : <input type="text" name="nom"></label>
 			<label>Prenom : <input type="text" name="prenom"></label>
 			<label>Sexe : <select name="sexe">
-				<option>-- sélectionnez --</option>
 				<option>Masculin</option>
 				<option>Feminin</option>
 			</select> </label>
@@ -52,11 +51,17 @@ Mettre les infos en session.
 3)Réafficher les données de la première partie avec le nombre total de points marqués.
 */	
 	if ($_SERVER['REQUEST_METHOD'] == 'POST'){	//Si submit
-		$sexe = $_POST['sexe'];					//
+		if(!empty($_POST['sexe'])){
+			$_SESSION['sexe'] = $_POST['sexe'];
+			$sexe = $_SESSION['sexe'];	
+		}
+		else{
+			$sexe = "";
+		}				
 		echo "<fieldset class='$sexe secondFormulaire'>";
 		echo "<form action='exercice10.php' method='post'>";
 		foreach ($_POST as $key => $value) {
-			if($key != "submit" && $key != "matchs"){
+			if($key != "submit" && $key != "matchs" && $key != "match" && $key != "matchResult"){
 				if(!empty($value))
 					$_SESSION[$key] = $value;
 				echo "<div>";
@@ -67,8 +72,10 @@ Mettre les infos en session.
 			else if($key == "matchs"){
 				for ($i=0; $i < intval($_POST["matchs"]) ; $i++) { 
 					echo "<label>Resultat du match " . $i . " : <input type='text' name='match[]'></label>";
+					echo "</br>";
 					$_SESSION[$key] = $_POST[$key];
 				}
+				echo "<div></div>";
 				echo "<label><input type='submit' name='matchResult' value='envoyer resultats'></label>";
 			}
 		}
@@ -77,20 +84,23 @@ Mettre les infos en session.
 
 		echo "<fieldset class='troisiemeFormulaire'>";
 		foreach ($_POST as $key => $value) {
-			if($key == "match[]"){
-				if(!empty($value))
-				{
-					$_SESSION[$key] = $value;
-					$_SESSION[$key] = $_POST[$key];
-					echo "<div>";
-					echo "Hello";
-					echo "<div>";
+			if($key == "match"){
+					if(!empty($value))
+					{
+						$_SESSION[$key] = $value;
+						$strAddition = "";
+						echo "<div>";
+						foreach ($_SESSION[$key] as $key2 => $value2) {
+							 $strAddition .= strval($value2) . "+";
+						}
+
+						echo "Nombre de points : " . trim($strAddition, "+");
+						echo "</div>";
+					}
 				}
 			}
+			echo "</fieldset>";
 		}
-
-		echo "</fieldset>";
-	}
  ?>
 </body>
 </html>
