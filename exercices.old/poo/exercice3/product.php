@@ -52,6 +52,7 @@
 						echo "<div>";
 							echo "<input class='add' type='submit' name='action' value='add'></input>";
 							echo "<input class='remove' type='submit' name='action' value='delete'></input>";
+							echo "<input class='removeAll' type='submit' name='action' value='delete all'></input>";
 							echo "<input class='hidden' type='hidden' name='name' value='$this->name'></input>";
 						echo "</div>";
 					echo "</form >";
@@ -108,8 +109,10 @@
 				$cart = $this->cart;
 
 				//check the parameter $all
-				if(is_bool($all) && $all && $testResult){
-					$cart->removeFromProductList($this);		//remove product from productList
+				if(is_bool($all) && $all){
+					$this->setNumber(0);
+					$cart->changeNumberOfProduct($this);
+					$cart->removeFromProductList($this);		
 				}
 				//check if $number is valid	
 				if($testResult){														

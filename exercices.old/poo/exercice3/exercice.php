@@ -53,6 +53,7 @@ include("product.php");
 //--- session
 session_start();
 
+
 // MAIN SCRIPT ====================
 //
 	
@@ -74,6 +75,9 @@ session_start();
 					$value = strval($_POST['number']);
 					$_SESSION[$_POST['name']]->removeFromCart(false,$value);
 				}
+			//if button delete all is pressed
+			case 'delete all':			
+					$_SESSION[$_POST['name']]->removeFromCart(true,0);
 				break;
 			//if button add is pressed
 			case 'add':			
