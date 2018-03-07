@@ -36,7 +36,7 @@
 		text-align: center;
 	}
 	img{
-		height: 200px;
+		height: 150px;
 		width: 200px;
 		align-self: center;
 		margin: 5px;
@@ -46,6 +46,7 @@
 	.products{
 		display: flex;
 		flex-flow: row;
+		flex-wrap: wrap;
 		justify-content:center;
 	}
 	.cart{
@@ -55,6 +56,16 @@
 		border-radius: 5%;
 		padding: 10px;
 		text-align: center;
+	}
+	table td {
+		box-shadow: 0px -1px black;
+		text-align: center;
+		padding: 2px;
+
+	}
+	th{
+		border: 1px solid black;
+		padding: 2px;
 	}
 </style>
 
@@ -111,16 +122,17 @@ session_start();
 				break;
 		}
 	}
+		echo "</div>";
+		echo "<div class='cart'>";
+			echo $_SESSION['cart']->update();
+		echo "</div>";
 		echo "<div class='products'>";
 		foreach ($_SESSION as $key => $value) {
 			if(is_a($value, "product")){
 				$value->initializeInterface();
 			}
 		}
-		echo "</div>";
-		echo "<div class='cart'>";
-			echo $_SESSION['cart']->update();
-		echo "</div>";
+
 ?>
 
 

@@ -4,6 +4,7 @@
 
 	//data structure for the cart. 
 	//using abstract because it defines what cart should implement
+	//
 	abstract class cartStructure {
 		//CONSTRUCTOR
 		public function __construct(){
@@ -19,8 +20,9 @@
 	}
 
 	//graphical interface and interactive stuff
+	//
 	class cart extends cartStructure{	
-		
+
 		public function __construct(){
 			parent::__construct();
 		}
@@ -83,11 +85,12 @@
 			echo "<table>";
 				echo "<tr>";
 				echo "<th>Name of product</th>";
-				echo "<th>Number</th>";
+				echo '<th>Number (max: '. product::maxNumberOfProducts .' )</th>';
 				echo "<th>Price</th>";
 				echo "<th>Total</th>";
 				echo "<tr>";
 				//fill the table with products
+				$greatTotal = 0;	// setting the big total (is watching you)
 				foreach ($this->productList as $key => $value) {
 					echo "<tr>";
 					echo "<td>" . $value[0] . "</td>";
@@ -95,7 +98,14 @@
 					echo "<td>" . $value[2] . "</td>";
 					echo "<td>" . $value[2]*$value[1] . "</td>";
 					echo "<tr>";
+					$greatTotal += $value[2]*$value[1];	// calculating the big bad ending total
 				}
+					echo "<tr>";
+					echo "<td></td>";
+					echo "<td></td>";
+					echo "<td>Total price :</td>";
+					echo "<td>". $greatTotal ."</td>";
+					echo "<tr>";
 			echo "</table>";	
 		}
 

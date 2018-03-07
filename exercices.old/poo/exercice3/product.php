@@ -9,6 +9,10 @@
 //
 
 	class product implements productInterface {
+		//CONSTANT VARIABLES******
+		//
+		const maxNumberOfProducts = 99;
+
 		public function __construct($name, $price, $image, $number, $cart){
 			if(is_string($name)){
 				$this->name = $name;
@@ -40,10 +44,8 @@
 
 		// create the corresponding entry in the cart array of products.
 		private function initializeInCart(){
-					if($this->currentNumber > 0){
 						$cart = $this->cart;
 						$cart->addToProductList($this);
-					}
 		}
 
 		//create interface to add and remove objects from the cart
@@ -90,6 +92,7 @@
 
 		//addToCart can add a $number of objects from the cart object. 
 		public function addToCart($number){
+			if(($this->getNumber() + $number) <= product::maxNumberOfProducts){
 					//create local references to variables
 					$testResult = $this->validateInteger($number, "addToCart");
 					$cart = $this->cart;
@@ -108,6 +111,7 @@
 							$cart->changeNumberOfProduct($this);
 						}
 					}
+				}
 		}
 
 		//removeFromCart can remove $all or a $number of objects from the cart object. 
