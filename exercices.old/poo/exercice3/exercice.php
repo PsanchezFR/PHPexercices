@@ -82,6 +82,7 @@ session_start();
 		$_SESSION['cart'] = new cart();
 		$_SESSION['oeuf'] = new product("oeuf", 1, "http://www.bioalaune.com/img/article/thumb/900x500/10368-oeufs.jpg", 0, $_SESSION['cart']);
 		$_SESSION['chocolat'] = new product("chocolat", 3, "http://www.patissermalin.fr/img/cms/choc.jpg", 0, $_SESSION['cart']);
+		$_SESSION['sanglier'] = new product('Coeur de sanglier', 999, 'https://previews.123rf.com/images/burakowski/burakowski1202/burakowski120200373/12222107-censored-stamp.jpg', 0, $_SESSION['cart']);
 	}
 	//DETECTION OF INPUTS		
 	//$_POST -- action, product, number are the values to use here
@@ -109,8 +110,11 @@ session_start();
 		}
 	}
 		echo "<div class='products'>";
-			echo $_SESSION['oeuf']->initializeInterface();
-			echo $_SESSION['chocolat']->initializeInterface();
+		foreach ($_SESSION as $key => $value) {
+			if(is_a($value, "product")){
+				$value->initializeInterface();
+			}
+		}
 		echo "</div>";
 		echo "<div class='cart'>";
 			echo $_SESSION['cart']->update();
