@@ -13,9 +13,14 @@
 			if(is_string($name)){
 				$this->name = $name;
 			}
-			if(is_float($price)){
+			
+			if(is_float($price) || is_int($price)){
 				$this->price = $price;
 			}
+			else{
+				$this->price = 1;
+			}
+
 			if(is_string($image)){
 				$this->image = $image;
 			}
@@ -63,6 +68,10 @@
 		//GETTERS---------------
 		public function getName(){
 			return $this->name;
+		}
+
+		public function getPrice(){
+			return $this->price;
 		}
 
 		public function getNumber(){

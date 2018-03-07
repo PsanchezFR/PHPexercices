@@ -51,6 +51,7 @@
 				$arrayOfValues = [];						//create new array
 				$arrayOfValues[] = $product->getName();		//push values into it
 				$arrayOfValues[] = $product->getNumber();	//
+				$arrayOfValues[] = $product->getPrice();	//
 				$this->productList[] = $arrayOfValues;		//push array into productList
 			}
 		}
@@ -90,8 +91,8 @@
 					echo "<tr>";
 					echo "<td>" . $value[0] . "</td>";
 					echo "<td>" . $value[1] . "</td>";
-					echo "<td>Price</td>";
-					echo "<td>Total</td>";
+					echo "<td>" . $value[2] . "</td>";
+					echo "<td>" . $value[2]*$value[1] . "</td>";
 					echo "<tr>";
 				}
 			echo "</table>";		
