@@ -13,7 +13,7 @@
 			if(is_string($name)){
 				$this->name = $name;
 			}
-			
+
 			if(is_float($price) || is_int($price)){
 				$this->price = $price;
 			}
@@ -30,7 +30,6 @@
 			if($this->validateCart($cart, "__construct()")){
 				$this->cart = $cart;
 				$this->initializeInCart();
-				$this->initializeInterface();
 			}
 		}
 

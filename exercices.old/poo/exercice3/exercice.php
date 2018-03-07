@@ -81,7 +81,7 @@ session_start();
 		$_SESSION['spawned'] = true;
 		$_SESSION['cart'] = new cart();
 		$_SESSION['oeuf'] = new product("oeuf", 1, "http://www.bioalaune.com/img/article/thumb/900x500/10368-oeufs.jpg", 0, $_SESSION['cart']);
-		$_SESSION['chocolat'] = new product("chocolat", 3, "http://www.patissermalin.fr/img/cms/choc.jpg", 10, $_SESSION['cart']);
+		$_SESSION['chocolat'] = new product("chocolat", 3, "http://www.patissermalin.fr/img/cms/choc.jpg", 0, $_SESSION['cart']);
 	}
 	//DETECTION OF INPUTS		
 	//$_POST -- action, product, number are the values to use here
