@@ -1,11 +1,17 @@
 <style>
 	body{
 		display: flex;
-		flex-flow: row;
+		flex-direction:column;
 		background: lightblue;
 	}
-	h1{
+	body div{
+		margin: 10px;
+	}
+	h1, h2{
 		align-self: center;
+	}
+	h2{
+		font-size: 1em;
 	}
 	form{
 		display: flex;
@@ -36,6 +42,19 @@
 		margin: 5px;
 		border: 1px solid gray;
 		border-radius: 5%;
+	}
+	.products{
+		display: flex;
+		flex-flow: row;
+		justify-content:center;
+	}
+	.cart{
+		align-self:center;
+		background: lightgray;
+		border: 2px solid gray;
+		border-radius: 5%;
+		padding: 10px;
+		text-align: center;
 	}
 </style>
 
@@ -87,11 +106,14 @@ session_start();
 				}
 				break;
 		}
-		echo $_SESSION['oeuf']->initializeInterface();
-		echo $_SESSION['chocolat']->initializeInterface();
-		echo $_SESSION['cart']->update();
 	}
-
+		echo "<div class='products'>";
+			echo $_SESSION['oeuf']->initializeInterface();
+			echo $_SESSION['chocolat']->initializeInterface();
+		echo "</div>";
+		echo "<div class='cart'>";
+			echo $_SESSION['cart']->update();
+		echo "</div>";
 ?>
 
 

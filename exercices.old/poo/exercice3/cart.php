@@ -79,6 +79,7 @@
 		//----for the graphic part-----
 		//
 		public function update(){
+			echo "<h2>Cart of current products</h2>";
 			echo "<table>";
 				echo "<tr>";
 				echo "<th>Name of product</th>";
@@ -95,7 +96,7 @@
 					echo "<td>" . $value[2]*$value[1] . "</td>";
 					echo "<tr>";
 				}
-			echo "</table>";		
+			echo "</table>";	
 		}
 
 	}
