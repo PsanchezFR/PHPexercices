@@ -21,8 +21,8 @@
 		flex-wrap: nowrap;
 		justify-content:center;
 		align-content: center;
-		height: 300px;
-		width: 300px;
+		height: 325px;
+		width: 325px;
 		border: 2px solid black;
 		border-radius: 10%;
 	}
