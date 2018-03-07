@@ -83,6 +83,8 @@ session_start();
 		$_SESSION['oeuf'] = new product("oeuf", 1, "http://www.bioalaune.com/img/article/thumb/900x500/10368-oeufs.jpg", 0, $_SESSION['cart']);
 		$_SESSION['chocolat'] = new product("chocolat", 3, "http://www.patissermalin.fr/img/cms/choc.jpg", 0, $_SESSION['cart']);
 		$_SESSION['Coeur de sanglier'] = new product('Coeur de sanglier', 999, 'https://previews.123rf.com/images/burakowski/burakowski1202/burakowski120200373/12222107-censored-stamp.jpg', 0, $_SESSION['cart']);
+		$_SESSION['Voiture de luxe'] = new product('Voiture de luxe', 19999, 'http://images.forum-auto.com/mesimages/406378/3658155.jpg', 0, $_SESSION['cart']);
+		$_SESSION['Throne Princier'] = new product('Throne Princier', 1337, 'https://www.fabuloustoilettes.com/wp-content/uploads/wc-seche.jpg', 0, $_SESSION['cart']);
 	}
 	//DETECTION OF INPUTS		
 	//$_POST -- action, product, number are the values to use here
