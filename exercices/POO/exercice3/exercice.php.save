@@ -1,0 +1,347 @@
+<style>
+	body{
+		display: flex;
+		flex-flow: row;
+		background: lightblue;
+	}
+	h1{
+		align-self: center;
+	}
+	form{
+		display: flex;
+		background:silver;
+		margin: 5px;
+		flex-flow:column;
+		flex-wrap: nowrap;
+		justify-content:center;
+		align-content: center;
+		height: 300px;
+		width: 300px;
+		border: 2px solid black;
+		border-radius: 10%;
+	}
+	form div{
+		display: flex;
+		flex-flow: row;
+		align-self: center;
+		align-content: space-around;
+	}
+	form input{
+		text-align: center;
+	}
+	img{
+		height: 200px;
+		width: 200px;
+		align-self: center;
+		margin: 5px;
+		border: 1px solid gray;
+		border-radius: 5%;
+	}
+</style>
+
+
+<?PHP
+//INITIALIZATION SCRIPT ====================
+// 
+
+session_start();
+//INTERFACES -- ONLY FOR MINIMUM FUNCTIONS AND CONSTANTS ====================
+	interface productInterface
+	{
+			public function addToCart($number);
+			public function removeFromCart($all, $number);
+	}
+
+//CLASS FOR THE PRODUCT ====================
+//
+
+	class product implements productInterface {
+		public function __construct($name, $price, $image, $number, $cart){
+			if(is_string($name)){
+				$this->name = $name;
+			}
+			if(is_float($price)){
+				$this->price = $price;
+			}
+			if(is_string($image)){
+				$this->image = $image;
+			}
+			if($this->validateInteger($number, "__construct()")){
+				$this->currentNumber = $number;
+			}
+			if($this->validateCart($cart, "__construct()")){
+				$this->cart = $cart;
+				$this->initializeInCart();
+				$this->initializeInterface();
+			}
+		}
+
+		//METHODS ******
+		//
+
+		// CALLED IN CONSTRUCTOR ---------------
+
+		// create the corresponding entry in the cart array of products.
+		private function initializeInCart(){
+					if($this->currentNumber > 0){
+						$cart = $this->cart;
+						$cart->addToProductList($this);
+					}
+		}
+
+		//create interface to add and remove objects from the cart
+		private function initializeInterface(){
+				echo "<article class='$this->name'>";
+					echo "<form action='?' method='post'>";
+						echo "<h1>$this->name</h1>";
+						echo "<img src='$this->image'>";
+						echo "<input class='number' type='text' name='number' value='TYPE A NUMBER OF PRODUCTS'></input>";
+						echo "<div>";
+							echo "<input class='add' type='submit' name='action' value='add'></input>";
+							echo "<input class='remove' type='submit' name='action' value='delete'></input>";
+							echo "<input class='hidden' type='hidden' name='name' value='$this->name'></input>";
+						echo "</div>";
+					echo "</form >";
+				echo "</article>";
+		}
+
+
+		//GETTERS---------------
+		public function getName(){
+			return $this->name;
+		}
+
+		public function getNumber(){
+			return $this->currentNumber;
+		}
+
+		//SETTERS---------------
+
+		//set the $number of products
+		private function setNumber($number){
+			$cart = $this->cart;
+			$this->currentNumber = $number;
+
+		}
+
+		//MANIPULATION OF CART---------------
+
+		//addToCart can add a $number of objects from the cart object. 
+		public function addToCart($number){
+					//create local references to variables
+					$testResult = $this->validateInteger($number, "addToCart");
+					$cart = $this->cart;
+					//check if $number is valid	
+					if($testResult){
+						$number += $this->currentNumber; //add current number of products and $number
+						$this->setNumber($number);		//set the new variable
+
+						//different actions if under or over 0
+						if($this->getNumber() > 0){
+						$cart->changeNumberOfProduct($this);
+						}
+						else{
+						$cart->addToProductList($this);
+						}
+					}
+		}
+
+		//removeFromCart can remove $all or a $number of objects from the cart object. 
+		public function removeFromCart($all, $number){
+				//create local references to variables
+				$testResult = $this->validateInteger($number, "removeFromCart");
+				$cart = $this->cart;
+
+				//check the parameter $all
+				if(is_bool($all) && $all && $testResult){
+					$cart->removeFromProductList($this);		//remove product from productList
+				}
+				//check if $number is valid	
+				if($testResult){														
+					$number *= -1;						//set $number to a negative value
+					$number += $this->currentNumber;	//add current number of products and $number
+					$this->setNumber($number);			//set the new variable
+
+					//different actions if under or over 0
+					if($this->getNumber() > 0){
+						$cart->changeNumberOfProduct($this);
+					}
+					else{
+						$cart->removeFromProductList($this);
+					}
+				}
+		}
+
+		//TESTS---------------
+
+		//validateParameters should be used for test purpose before modifying the product list
+		//$functionName is used for more specific errors.
+		public function validateInteger($number, $functionName){
+			//is $number a positive integer ?
+			if(!is_int($number) && !$number > 0){
+				trigger_error("$functionName -- " . '$number should be an int.');
+				return false;
+			}
+			// return the parameters if valid
+			return true;
+		}
+
+		//validateParameters should be used for test purpose when assigning a new cart
+		//$functionName is used for more specific errors.
+		public function validateCart($cart, $functionName){
+			if(is_a($cart, "cart")){
+				return true;	
+			}
+			trigger_error("$functionName -- " . '$cart is of invalid class ' . get_class($cart));
+				return false;
+		}
+	}
+
+//CLASSES FOR THE CART ====================
+//
+
+	//data structure for the cart. 
+	//using abstract because it defines what cart should implement
+	abstract class cartStructure {
+
+		//CONSTRUCTOR
+		public function __construct(){
+			$this->productList = [];		//	create an array
+		}
+		//ABSTRACT METHODS
+			//methods to modify productList
+		abstract function addToProductList($product);
+		abstract function removeFromProductList($product);
+		abstract function changeNumberOfProduct($product);
+			//method to graphically update the cart
+		abstract function update(); 
+	}
+
+	//graphical interface and interactive stuff
+	class cart extends cartStructure{	
+		
+		public function __construct(){
+			parent::__construct();
+		}
+
+		//METHODS
+		//
+		//----Random tools-----
+			//function to search in productList
+			//return an array with [0] = values of product [1]=key
+			//can be used to unset
+			public function searchProductList($product){
+				if(is_a($product, "product")){
+					foreach ($this->productList as $key => $value) {
+						if($value[0] === $product->name){
+							return array($value, $key);
+						}
+					}
+				}
+			}
+		//----to modify productList-----
+		//add a product to the list of products
+		//should be used when number of products is modified from 0 to 1
+		public function addToProductList($product){
+			if(is_a($product, "product")){
+				$arrayOfValues = [];						//create new array
+				$arrayOfValues[] = $product->getName();		//push values into it
+				$arrayOfValues[] = $product->getNumber();	//
+				$this->productList[] = $arrayOfValues;		//push array into productList
+			}
+		}
+
+		//search a product in $productList and remove it from the list of products
+		//should be used if product number == 0
+		public function removeFromProductList($product){
+			$productTarget = $this->searchProductList($product);
+			unset($productTarget[0]);	
+		}
+
+		//search a product in $productList and change its value
+		//
+		public function changeNumberOfProduct($product){
+			$arrayOfValues = $this->searchProductList($product);
+			$arrayOfValues[0][1] = $product->getNumber();
+			$this->productList[$arrayOfValues[1]] = $arrayOfValues[0];
+		}
+		//----methods for sessions saving----
+		//
+		public function save(){
+			serialize($this);
+		}
+
+		public function __sleep(){
+			echo "SLEEP";
+		}
+
+		public function __wakeup(){
+			echo "WAKE";
+		}
+
+		//----for the graphic part-----
+		//
+		public function update(){
+			echo "<table>";
+				echo "<tr>";
+				echo "<th>Name of product</th>";
+				echo "<th>Number</th>";
+				echo "<th>Price</th>";
+				echo "<th>Total</th>";
+				echo "<tr>";
+				//fill the table with products
+				foreach ($this->productList as $key => $value) {
+					echo "<tr>";
+					echo "<td>" . $value[0] . "</td>";
+					echo "<td>" . $value[1] . "</td>";
+					echo "<td>Price</td>";
+					echo "<td>Total</td>";
+					echo "<tr>";
+				}
+			echo "</table>";		
+		}
+	}
+// MAIN SCRIPT ====================
+//
+
+	//CREATION OF OBJECTS IN SESSION
+	if(empty($_SESSION['spawned'])){
+		Echo "hello";
+		$_SESSION['spawned'] = true;
+		$_SESSION['cart'] = new cart();
+		$_SESSION['oeuf'] = new product("oeuf", 1, "http://www.bioalaune.com/img/article/thumb/900x500/10368-oeufs.jpg", 0, $_SESSION['cart']);
+		$_SESSION['chocolat'] = new product("chocolat", 3, "http://www.patissermalin.fr/img/cms/choc.jpg", 10, $_SESSION['cart']);
+	}
+
+	//DETECTION OF INPUTS		
+	//$_POST -> action, product, number are the values to use here
+	if(isset($_POST['action'])){
+		//test the kind of action
+		switch ($_POST['action']){
+			//if button delete is pressed
+			case 'delete':			
+				if(ctype_digit($_POST['number'])){
+					$value = strval($_POST['number']);
+					$_SESSION[$_POST['name']]->removeFromCart(false,$value);
+
+				}
+				break;
+			//if button add is pressed
+			case 'add':			
+				if(ctype_digit($_POST['number'])){
+					$value = strval($_POST['number']);
+					$_SESSION[$_POST['name']]->addToCart($value);
+				}
+				break;
+		}
+		echo $_SESSION['cart']->update();
+	}
+	
+?>
+
+
+<html> 
+<body>
+	
+</body>
+</html>
