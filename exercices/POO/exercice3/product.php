@@ -36,7 +36,6 @@
 				// Test using function validateCart() in this object
 				if($this->validateCart($cart, "__construct()")){
 					$this->cart = $cart;
-					$this->initializeInCart();
 				}
 			}
 

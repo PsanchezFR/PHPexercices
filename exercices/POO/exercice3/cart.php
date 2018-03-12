@@ -25,6 +25,7 @@
 
 			public function __construct(){
 				parent::__construct();
+				$this->id = random_int(0, 999999);
 			}
 
 			//METHODS
@@ -85,6 +86,7 @@
 			//
 				public function update(){
 					echo "<h2>Cart of current products</h2>";
+					echo "cart id : " . $this->id ;
 					echo "<table>";
 
 						//	head of table

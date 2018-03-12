@@ -6,7 +6,7 @@
 		interface userInterface {
 				//methods to implement in child---------------
 
-				public function userConnect($login, $password);
+				//public function userConnect($login, $password);
 				public function userDisconnect($user);
 				
 		}
@@ -16,7 +16,6 @@
 		class user implements userInterface {
 			//VARIABLES
 			//
-				private $isConnected = false;
 
 			//CONSTRUCTOR
 			//
@@ -25,13 +24,14 @@
 					$this->password = $password;			//local reference of password
 					$this->cartList[] = $firstCart;			//initialize an array of carts
 					$this->usersManager = $usersManager;	//local reference to usersManager object
+					$this->isConnected = false;
 				}
 
 			//METHODS
 			//
 				//GETTERS---------------
 				public function getIsConnected(){
-					return $isConnected;
+					return $this->isConnected;
 				}
 
 				public function getLogin(){
@@ -46,13 +46,13 @@
 					return $this->cartList;		//returns an array
 				}
 
-				private getUserManager(){
+				private function getUsersManager(){
 					return $this->usersManager;
 				}
 
 				//SETTERS---------------
 				public function setIsConnected($newStatus){
-					$isConnected = $newStatus;
+					$this->isConnected = $newStatus;
 				}
 
 				public function setLogin($newLogin){
@@ -69,15 +69,15 @@
 				// 	---- the login request should normally be fired in the usersManager class ----
 				//
 					// public function userConnect($login, $password){
-					// 	$userManager = $this->getUserManager();
+					// 	$usersManager = $this->getUsersManager();
 
-					// 	$userManager->connect($login, $password, $this);
+					// 	$usersManager->connect($login, $password, $this);
 					// }
 
 				public function userDisconnect($user){
-					$userManager = $this->getUserManager();
+					$usersManager = $this->getUsersManager();
 
-					$userManager->disconnect($this);
+					$usersManager->disconnect($this);
 				}
 		}
 ?>
