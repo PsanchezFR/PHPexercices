@@ -44,7 +44,7 @@
     </head>
     <body>
     <?php
-
+    	session_start();
     	include("connexion.php"); 
     	include("user.php"); 
     	include("car.php");
@@ -63,7 +63,7 @@
 					echo "<ul>";
 						foreach ($usersManager->getUserList() as $key => $object) {
 							echo "<li>";
-							echo "<input type='radio' name='user'>$object->firstname $object->lastname</input>";
+							echo "<input type='radio' name='user' value=".$object->id.">$object->firstname $object->lastname</input>";
 							echo "</li>";
 						}
 					echo "</ul>";
@@ -71,7 +71,7 @@
 					echo "<ul>";
 						foreach ($carsManager->getCarList() as $key => $object) {
 							echo "<li>";
-							echo "<input type='radio' name='car'>$object->brand $object->type</input>";
+							echo "<input type='radio' name='car' value=".$object->car_id.">$object->brand $object->type</input>";
 							echo "</li>";
 						}
 					echo "</ul>";
@@ -95,19 +95,15 @@
 						echo "<tr>";
 					}
 			echo "</table>";
-
-			// foreach ($carsManager->getCarList() as $key => $object) {
-			// 	echo "<pre>";
-			// 	echo $object->brand;
-			// 	echo "</pre>";
-			// }
-
-			// foreach ($userCarManager->getUserCarList() as $key => $object) {
-			// 	echo "<pre>";
-			// 	echo $object->date;
-			// 	echo "</pre>";
-			// }
-
+			
+			if(!empty($_POST)){
+				if(isset($_POST['car']) && isset($_POST['user'])){
+					echo "<pre>" . intval($_POST['car']) . "</pre>";
+					echo "<pre>" . intval($_POST['user']) . "</pre>";
+					$userCarManager->insertOne(intval($_POST['car']), intval($_POST['user']), date('Y-m-d H:i:s'));
+				}
+			}
+			session_destroy();
     ?>
     </body>
 

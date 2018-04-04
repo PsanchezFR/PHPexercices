@@ -30,6 +30,19 @@
 		 			$result = $reqUserCar->fetchAll(PDO::FETCH_CLASS, "user_car");
 		 			$this->userCarList = $result;
 		 			return $result;
+				}
+
+				public function insertOne($car_id, $user_id, $date){
+					try{
+						$reqUserCar= $this->bdd->prepare("INSERT INTO user_car (id, car_id, user_id, date) VALUES (NULL,?,?,?)");
+						$reqUserCar->bindParam(1, $car_id, PDO::PARAM_INT);
+						$reqUserCar->bindParam(2, $user_id, PDO::PARAM_INT);
+						$reqUserCar->bindParam(3, $date, PDO::PARAM_INT);
+			 			$reqUserCar->execute();
+		 			}
+		 			catch(Exception $ex){
+		 				echo $ex;
+		 			}
 				}			
 
 		}	
