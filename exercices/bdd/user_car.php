@@ -5,8 +5,7 @@
 					public $id;
 					public $car_id;
 					public $user_id;
-					public $date;
-			
+					public $date;	
 		}
 
 		class userCarManager {
@@ -30,6 +29,7 @@
 		 			$reqUserCar->execute();
 		 			$result = $reqUserCar->fetchAll(PDO::FETCH_CLASS, "user_car");
 		 			$this->userCarList = $result;
+		 			return $result;
 				}			
 
 		}	
