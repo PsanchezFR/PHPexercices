@@ -9,41 +9,19 @@
 			
 		}
 
-		class carsManager {
+		class carsManager extends manager{
 			//CONSTRUCTOR
 			//
 				public function __construct($bdd){
-					$this->bdd = $bdd;
-					$this->carList = [];
+					parent::__construct($bdd);
 				}
 
 			//METHODS
 			//
 				//GETTERS---------------
-				public function getCarList(){
-					return $this->carList;
-				}
-
-				public function getCar($id){
-					foreach ($this->carList as $key => $car) {
-						if($car->car_id === $id){
-							return $car;
-						}
-					}
-				}
-
 				public function getCarType($id){
-					return $this->getCar($id)->type;
+					return $this->getObject($id)->type;
 				}
-
-				//BDD---------------
-				public function fetchAll(){
-					$reqCar= $this->bdd->prepare("SELECT * FROM car");
-		 			$reqCar->execute();
-		 			$result = $reqCar->fetchAll(PDO::FETCH_CLASS, "car");
-		 			$this->carList = $result;
-				}			
-
 		}	
 
 

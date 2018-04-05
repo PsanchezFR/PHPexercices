@@ -8,41 +8,19 @@
 					public $password;		
 		}
 
-		class usersManager {
+		class usersManager extends manager {
 			//CONSTRUCTOR
 			//
 				public function __construct($bdd){
-					$this->bdd = $bdd;
-					$this->userList = [];
+					 parent::__construct($bdd);
 				}
 
 			//METHODS
 			//
 				//GETTERS---------------
-				public function getUserList(){
-					return $this->userList;
-				}
-
-				public function getUser($id){
-					foreach ($this->userList as $key => $user) {
-						if($user->id === $id){
-							return $user;
-						}
-					}
-				}
-
 				public function getUserName($id){
-					return $this->getUser($id)->firstname;
+					return $this->getObject($id)->firstname;
 				}
-
-				//BDD---------------
-				public function fetchAll(){
-					$reqUser = $this->bdd->prepare("SELECT * FROM user");
-		 			$reqUser->execute();
-		 			$result = $reqUser->fetchAll(PDO::FETCH_CLASS, "user");
-		 			$this->userList = $result;
-				}			
-
 		}	
 		
 ?>

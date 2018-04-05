@@ -8,29 +8,16 @@
 					public $date;	
 		}
 
-		class userCarManager {
+		class userCarManager extends manager{
 			//CONSTRUCTOR
 			//
 				public function __construct($bdd){
-					$this->bdd = $bdd;
-					$this->userCarList = [];
+					parent::__construct($bdd);
 				}
 
 			//METHODS
 			//
-				//GETTERS---------------
-				public function getUserCarList(){
-					return $this->userCarList;
-				}
-
 				//BDD---------------
-				public function fetchAll(){
-					$reqUserCar= $this->bdd->prepare("SELECT * FROM user_car ORDER BY user_car.id DESC");
-		 			$reqUserCar->execute();
-		 			$result = $reqUserCar->fetchAll(PDO::FETCH_CLASS, "user_car");
-		 			$this->userCarList = $result;
-		 			return $result;
-				}
 
 				public function insertOne($car_id, $user_id, $date){
 					try{

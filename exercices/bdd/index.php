@@ -46,6 +46,7 @@
     <?php
     	session_start();
     	include("connexion.php"); 
+    	include("manager.php"); 
     	include("user.php"); 
     	include("car.php");
     	include("user_car.php");
@@ -54,14 +55,14 @@
     		$carsManager = new carsManager($bdd);
     		$userCarManager = new userCarManager($bdd);
 
-			$usersManager->fetchAll();
-			$carsManager->fetchAll();
-			$userCarManager->fetchAll();
+			$usersManager->fetchAll("user");
+			$carsManager->fetchAll("car");
+			$userCarManager->fetchAll("user_car");
 
 			echo "<form action='index.php' method='post'>";
 				echo "<div>";
 					echo "<ul>";
-						foreach ($usersManager->getUserList() as $key => $object) {
+						foreach ($usersManager->getObjectList() as $key => $object) {
 							echo "<li>";
 							echo "<input type='radio' name='user' value=".$object->id.">$object->firstname $object->lastname</input>";
 							echo "</li>";
@@ -69,9 +70,9 @@
 					echo "</ul>";
 
 					echo "<ul>";
-						foreach ($carsManager->getCarList() as $key => $object) {
+						foreach ($carsManager->getObjectList() as $key => $object) {
 							echo "<li>";
-							echo "<input type='radio' name='car' value=".$object->car_id.">$object->brand $object->type</input>";
+							echo "<input type='radio' name='car' value=".$object->id.">$object->brand $object->type</input>";
 							echo "</li>";
 						}
 					echo "</ul>";
@@ -88,7 +89,7 @@
 				echo "<th>CAR NAME</th>";
 				echo "<th>DATE</th>";
 			echo "</tr>";
-					foreach ($userCarManager->getUserCarList() as $key => $object) {
+					foreach ($userCarManager->getObjectList() as $key => $object) {
 						echo "<tr>";
 							echo "<th>$object->id</th>";
 							echo "<th>$object->user_id</th>";
