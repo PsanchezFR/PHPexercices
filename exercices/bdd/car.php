@@ -24,6 +24,18 @@
 					return $this->carList;
 				}
 
+				public function getCar($id){
+					foreach ($this->carList as $key => $car) {
+						if($car->car_id === $id){
+							return $car;
+						}
+					}
+				}
+
+				public function getCarType($id){
+					return $this->getCar($id)->type;
+				}
+
 				//BDD---------------
 				public function fetchAll(){
 					$reqCar= $this->bdd->prepare("SELECT * FROM car");

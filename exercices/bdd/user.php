@@ -5,7 +5,7 @@
 					public $firstname;
 					public $lastname;
 					public $login;
-					public $password;			
+					public $password;		
 		}
 
 		class usersManager {
@@ -21,6 +21,18 @@
 				//GETTERS---------------
 				public function getUserList(){
 					return $this->userList;
+				}
+
+				public function getUser($id){
+					foreach ($this->userList as $key => $user) {
+						if($user->id === $id){
+							return $user;
+						}
+					}
+				}
+
+				public function getUserName($id){
+					return $this->getUser($id)->firstname;
 				}
 
 				//BDD---------------

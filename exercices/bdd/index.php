@@ -35,7 +35,7 @@
 		}
 		table{
 			margin-top: 10%;
-			margin-left: 40%;
+			margin-left: 33%;
 		}
 		table tr, table th{
 			border: 1px solid black;
@@ -83,14 +83,18 @@
 			echo "<tr>";
 				echo "<th>ID</th>";
 				echo "<th>USER ID</th>";
+				echo "<th>USER NAME</th>";
 				echo "<th>CAR ID</th>";
+				echo "<th>CAR NAME</th>";
 				echo "<th>DATE</th>";
 			echo "</tr>";
 					foreach ($userCarManager->getUserCarList() as $key => $object) {
 						echo "<tr>";
 							echo "<th>$object->id</th>";
 							echo "<th>$object->user_id</th>";
+							echo "<th>" . $usersManager->getUserName($object->user_id) . "</th>";
 							echo "<th>$object->car_id</th>";
+							echo "<th>" . $carsManager->getCarType($object->car_id) . "</th>";
 							echo "<th>$object->date</th>";
 						echo "<tr>";
 					}
@@ -98,8 +102,6 @@
 			
 			if(!empty($_POST)){
 				if(isset($_POST['car']) && isset($_POST['user'])){
-					echo "<pre>" . intval($_POST['car']) . "</pre>";
-					echo "<pre>" . intval($_POST['user']) . "</pre>";
 					$userCarManager->insertOne(intval($_POST['car']), intval($_POST['user']), date('Y-m-d H:i:s'));
 					session_destroy();
 					header("Refresh:0");
