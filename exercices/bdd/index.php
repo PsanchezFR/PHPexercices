@@ -45,6 +45,7 @@
     <body>
     <?php
     	session_start();
+    	
     	include("connexion.php"); 
     	include("manager.php"); 
     	include("user.php"); 
