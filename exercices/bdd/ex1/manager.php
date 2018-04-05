@@ -22,7 +22,6 @@
 					}
 				}
 
-
 				//BDD---------------
 				public function fetchAll($tableName){
 					$classname = $tableName;
