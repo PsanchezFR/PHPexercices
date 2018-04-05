@@ -101,9 +101,11 @@
 					echo "<pre>" . intval($_POST['car']) . "</pre>";
 					echo "<pre>" . intval($_POST['user']) . "</pre>";
 					$userCarManager->insertOne(intval($_POST['car']), intval($_POST['user']), date('Y-m-d H:i:s'));
+					session_destroy();
+					header("Refresh:0");
 				}
 			}
-			session_destroy();
+
     ?>
     </body>
 
