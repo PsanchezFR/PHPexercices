@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 
 <html>
 
@@ -26,7 +26,6 @@
 			flex-direction:row;
 			justify-content: center;
 		}
-
 		ul{
 			border: 1px solid gray;
 			border-radius: 5%;
@@ -51,15 +50,12 @@
     	include("user.php"); 
     	include("car.php");
     	include("user_car.php");
-
     		$usersManager = new usersManager($bdd);
     		$carsManager = new carsManager($bdd);
     		$userCarManager = new userCarManager($bdd);
-
 			$usersManager->fetchAll("user");
 			$carsManager->fetchAll("car");
 			$userCarManager->fetchAll("user_car");
-
 			echo "<form action='index.php' method='post'>";
 				echo "<div>";
 					echo "<ul>";
@@ -69,7 +65,6 @@
 							echo "</li>";
 						}
 					echo "</ul>";
-
 					echo "<ul>";
 						foreach ($carsManager->getObjectList() as $key => $object) {
 							echo "<li>";
@@ -80,7 +75,6 @@
 				echo "</div>";
 				echo "<input type='submit' name='submit'></input>";
 			echo "</form>";
-
 			echo "<table>";
 			echo "<tr>";
 				echo "<th>ID</th>";
@@ -109,7 +103,6 @@
 					header("Refresh:0");
 				}
 			}
-
     ?>
     </body>
 
