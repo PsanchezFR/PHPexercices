@@ -18,9 +18,9 @@
 		}
 
 		public function getAll(){
-					$reqObjet = $this->bdd->prepare("SELECT * FROM $this->nomObjet ORDER BY id DESC");
+					$reqObjet = self::$bdd->prepare("SELECT * FROM $this->nomObjet ORDER BY id ASC");
 		 			$reqObjet->execute();
-		 			$resultat = $reqObjet->fetchAll(\PDO::FETCH_CLASS, $this->nomObjet);
+		 			$resultat = $reqObjet->fetchAll(\PDO::FETCH_CLASS, 'objet\\' . $this->nomObjet);
 		 			$this->listeObjets = $resultat;
 				}			
 

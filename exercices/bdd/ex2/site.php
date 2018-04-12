@@ -3,9 +3,17 @@
 
 	class siteManager extends manager{
 
-		public function __construct(){
-			parent::__construct();
-		}
+
+		public function getAllNames(){
+				$this->getAll();
+				$listeSites = [];
+
+				foreach ($this->listeObjets as $key => $value) {
+					$listeSites[] = $value->nom . " " . $value->ville;
+				}
+
+				return $listeSites;
+			}
 
 
 	}
