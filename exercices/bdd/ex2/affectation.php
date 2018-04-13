@@ -26,7 +26,38 @@
 			}
 
 			// INTERFACE
+			public function creer_interface_affectation(){
+				echo "<form action='index.php' method='post'>";
+		            echo "<div>";
 
+		                echo "<select name='employe'>";
+		                	$listeDeNomsEtPrenoms = $this->recuperer_dependance(employeManager)->getAllColumns(['prenom', 'nom']);
+		                    foreach ($listeDeNomsEtPrenoms as $key => $value) {
+		                        $id= $key+1;
+		                        echo "<option value='$id'>$value</option>";
+		                    }
+		                echo "</select>";
+
+		                echo "<select name='site'>";
+		                	$listeDeNoms = $this->recuperer_dependance(siteManager)->getAllColumns(['ville', 'nom', 'CP']);
+		                    foreach ($listeDeNoms as $key => $value) {
+		                        $id= $key+1;
+		                        echo "<option value='$id'>$value</option>";
+		                    }
+		                echo "</select>";
+
+		            echo "</div>";
+		            echo "<input type='submit' value='Affecter !'>";
+		        echo "</form>";
+
+		        if(isset($_POST))
+		        {
+		            if(isset($_POST['employe']) && isset($_POST['site']))
+		            {
+		                $this->add($_POST['employe'], $_POST['site']);
+		            }
+		        }
+			}
 	}
 
 	namespace objet;

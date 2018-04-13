@@ -54,38 +54,15 @@
         include("affectation.php");
 
         $affectationManager = new manager\affectationManager();
-        $employeManager = new manager\employeManager($affectationManager);
+        $employeManager = new manager\employeManager();
         $siteManager = new manager\siteManager();
         $incidentManager = new manager\incidentManager();
 
-        echo "<form action='index.php' method='post'>";
-            echo "<div>";
+        $affectationManager->creer_dependance("employeManager", $employeManager);
+        $affectationManager->creer_dependance("siteManager", $siteManager);
 
-                echo "<select name='employe'>";
-                    foreach ($employeManager->getAllNames() as $key => $value) {
-                        $id= $key+1;
-                        echo "<option value='$id'>$value</option>";
-                    }
-                echo "</select>";
-
-                echo "<select name='site'>";
-                    foreach ($siteManager->getAllNames() as $key => $value) {
-                        $id= $key+1;
-                        echo "<option value='$id'>$value</option>";
-                    }
-                echo "</select>";
-
-            echo "</div>";
-            echo "<input type='submit' value='Affecter !'>";
-        echo "</form>";
-
-        if(isset($_POST))
-        {
-            if(isset($_POST['employe']) && isset($_POST['site']))
-            {
-                $affectationManager->add($_POST['employe'], $_POST['site']);
-            }
-        }
+        $employeManager->show_login_interface();
+        //$affectationManager->creer_interface_affectation();
 
 		session_destroy();
     ?>

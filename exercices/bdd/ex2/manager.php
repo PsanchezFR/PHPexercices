@@ -7,6 +7,7 @@
 
 		public function __construct(){
 			$this->listeObjets = [];
+			$this->listeDependance = [];
 
 			$this->nomObjet = stripslashes(get_class($this));
 			$this->nomObjet = str_replace("manager", "", $this->nomObjet);
@@ -22,7 +23,22 @@
 		 			$reqObjet->execute();
 		 			$resultat = $reqObjet->fetchAll(\PDO::FETCH_CLASS, 'objet\\' . $this->nomObjet);
 		 			$this->listeObjets = $resultat;
-				}			
+				}	
+
+		public function getAllColumns($columnNamesArray){
+				$this->getAll();
+				$listeDansTable = [];
+				
+				foreach ($this->listeObjets as $key => $objet) {
+					$listeDansLigne = [];
+					foreach ($columnNamesArray as $key => $nomColonne) {
+						$listeDansLigne[] = $objet->$nomColonne;
+					}
+
+					$listeDansTable[] = implode(", ", $listeDansLigne);
+				}
+				return $listeDansTable;
+			}		
 
 		static function creerConnexion(){
 			try{
@@ -35,5 +51,12 @@
 			}
 		}		
 
+		public function creer_dependance($nomClef, $objectDependance){
+			$this->listeDependance[$nomClef] = $objectDependance;
+		}
+
+		public function recuperer_dependance($nomClef){
+			return $this->listeDependance[$nomClef];
+		}
 	}
 ?>

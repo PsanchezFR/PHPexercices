@@ -3,11 +3,6 @@
 
 	class employeManager extends manager{
 
-		public function __construct($affectationManager){
-			parent::__construct();
-			$this->affectationManager = $affectationManager;
-		}
-
 		// METHODS
 		//	
 			// OBJECTS
@@ -53,6 +48,33 @@
 
 					echo "<input type='submit' value='sign in'>";
 				echo "</form>";
+
+				 if(isset($_POST))
+		        {
+		            if(isset($_POST['login']) && isset($_POST['password']))
+		            {
+		            	$isLoginOk = false;
+		            	$isPasswordOk = false;
+
+		            	foreach ($this->getAllColumns(['email']) as $key => $value) {
+		            		if($value == $_POST['login']){
+		            			$isLoginOk = true;
+		            		}
+		            	}
+
+		            	foreach ($this->getAllColumns(['password']) as $key => $value) {
+		            		if($value == $_POST['password']){
+		            			$isPasswordOk = true;
+		            		}
+		            	}
+		                
+		                if($isLoginOk && $isPasswordOk){
+		                	echo "Mise en place de la magie connective !";
+		                }
+
+		            }
+		        }
+
 			}
 
 			public function show_employe_interface($id_employe){
